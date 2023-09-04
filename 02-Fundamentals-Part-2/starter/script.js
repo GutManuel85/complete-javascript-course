@@ -356,9 +356,9 @@ while(counter > 0){
 let dice = Math.trunc(Math.random() * 6 + 1);
 let attemps = 0;
 
-while(dice !== 6){
-    dice = Math.trunc(Math.random() * 6 + 1);
-    attemps++;
-    console.log(`You rolled a ${dice}`);
+while (dice !== 6) {
+  dice = Math.trunc(Math.random() * 6 + 1);
+  attemps++;
+  console.log(`You rolled a ${dice}`);
 }
 console.log(`You rolled a 6 in the ${attemps} attemp`);

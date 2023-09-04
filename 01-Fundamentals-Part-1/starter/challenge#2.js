@@ -10,10 +10,10 @@ console.log(BMIMark, BMIJohn);
 /* Write your code below. Good luck! 🙂 */
 let message;
 
-if(BMIMark > BMIJohn){
-    message = `Mark's BMI (${BMIMark}) is higher than John's (${BMIJohn})!`
-}else{
-    message = `John's BMI (${BMIJohn}) is higher than Mark's (${BMIMark})!`
+if (BMIMark > BMIJohn) {
+  message = `Mark's BMI (${BMIMark}) is higher than John's (${BMIJohn})!`;
+} else {
+  message = `John's BMI (${BMIJohn}) is higher than Mark's (${BMIMark})!`;
 }
 
 console.log(message);

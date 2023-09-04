@@ -5,5 +5,3 @@ let population = 9.3;
 console.log(country);
 console.log(continent);
 console.log(population);
-
-

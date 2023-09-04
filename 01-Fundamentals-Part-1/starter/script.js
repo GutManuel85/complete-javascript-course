@@ -410,5 +410,3 @@ console.log(`You have can drink ${age >= 18 ? 'water!' : 'wine!'}`);
 */
 
 ////// JavaScript Releses: ES5, ES6+ and ESNext ///////////
-
-

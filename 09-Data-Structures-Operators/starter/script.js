@@ -350,8 +350,6 @@ console.log(rest1);
 console.log(rest2);
 
 
-*/
-
 /////////// 110. Coding Challenge #1 ////////////////
 
 const game = {
@@ -440,4 +438,347 @@ for (const team of game.players){
   console.log(team);
 }
 
-for (const [team2] = game.team2)
+////////////// 112. Enhanced Object Literals ////////
+
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'su']
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekdays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+}
+
+
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  // Possible until ES6: use an object reference = enhanced literals
+  openingHours,
+
+
+  // Possible until ES6: don't have to write function keyword
+  orderFood(starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  //Object-Method with Object as parameter and some default values for the properties
+  orderDelivery({
+    starterIndex = 1,
+    mainIndex = 1,
+    time = '20:00',
+    address,
+  }) {
+    console.log(
+      `${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
+
+  orderPasta(ing1, ing2, ing3) {
+    console.log(ing1, ing2, ing3);
+  },
+};
+
+restaurant.orderDelivery({address: "street1"});
+console.log(restaurant.openingHours);
+
+///// 113. Optional Chaining (?.) ///////////////
+
+// Without optional chaining
+if (restaurant.openingHours && restaurant.openingHours.mon){
+  console.log(restaurant.openingHours.mon.open);
+}
+
+// With optional chaining: bricht ab, nach mon? falls mon nicht existiert und wirft keinen Fehler
+console.log(restaurant.openingHours.mon?.open);
+
+console.log(restaurant.openingHours?.mon?.open);
+
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'su'];
+
+for(const day of days){
+  const open = restaurant.openingHours[day]?.open ?? 'closed'
+  console.log(`On ${day} we open at ${open}`)
+}
+
+// Optional Chaining for methods
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+console.log(restaurant.orderPasta?.(0, 1) ?? 'Method does not exist');
+
+// Optional Chainig for arrays
+const users = [
+  { name: 'Manuel', email: 'hello@manuel.com' },
+  { name: 'Robertina', email: 'hello@robi.com' },
+];
+
+console.log(users[0]?.email) ?? 'User does not exist';
+console.log(users[1]?.email) ?? 'User does not exist';
+console.log(users[2]?.email) ?? 'User does not exist'; //with optional channing: returns undefined
+console.log(users[2].email) ?? 'User does not exist'; //without optional channing: throws TypeError
+
+
+
+//// 114. Looping Objects: Object Keys, Values, and Entires
+
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'su'];
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekdays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  // Possible until ES6: use an object reference = enhanced literals
+  openingHours,
+
+  // Possible until ES6: don't have to write function keyword
+  orderFood(starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  //Object-Method with Object as parameter and some default values for the properties
+  orderDelivery({ starterIndex = 1, mainIndex = 1, time = '20:00', address }) {
+    console.log(
+      `${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
+
+  orderPasta(ing1, ing2, ing3) {
+    console.log(ing1, ing2, ing3);
+  },
+};
+
+restaurant.orderDelivery({ address: 'street1' });
+console.log(restaurant.openingHours);
+
+// Get the keys of an object
+for(const day of Object.keys(openingHours)){
+  console.log(day);
+}
+
+const keys = Object.keys(openingHours);
+
+console.log(`The restaurant is open on ${keys.length} days: ${keys}`)
+
+
+// Get the values of an object
+const values = Object.values(openingHours);
+
+for(const day of values){
+  console.log(day);
+}
+
+// Get the entries of an object
+const entries = Object.entries(openingHours);
+
+for(const entry of entries){
+  console.log(entry);
+}
+
+console.log(entries);
+
+// Destructuring directly in for loop
+for (const [key, {open, close}] of entries){
+  // an entry looks for example like that: [ 'thu', { open: 12, close: 22 } ]
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+
+// my own example
+
+const carEvent = {
+  shownCars: [
+    {brand: "BMW", model: "X"},
+    {brand: "Fiat", model: "Punto"}
+  ]
+}
+
+
+for(const {brand, model} of carEvent.shownCars){
+  console.log(`This is the car of the brand ${brand} with the model ${model}`);
+}
+
+*/
+
+
+///// 115. Coding Challenge #2
+
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+// exercise 1: goal number and player
+let counter = 1;
+game.scored.forEach(element => {
+  console.log(`Goal ${counter}: ${element}`);
+  counter++;
+});
+
+// exercise 2: average odds
+let counter2 = 0;
+let sum = 0;
+let average = 0;
+for(let key in game.odds){
+  sum += game.odds[key];
+  counter2++;
+};
+average = sum / counter2;
+console.log(`The average is: ${sum} divided through ${counter2} is ${average}`);
+
+
+// exercise 3: print odds
+let counter3 = 0;
+for(let key in game.odds){
+  let sentences = [
+    `Odd of victory ${game[key]}: `,
+    `Odd of draw: `,
+    `Odd of victory ${game[key]}`,
+  ];
+  console.log(`${sentences[counter3]} ${game.odds[key]}`);
+  counter3++;
+}
+
+
+/// 116 Sets: unique values and order is irrelevant
+
+const ordersSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Risotto', 'Pizza']);
+console.log(ordersSet);
+
+console.log(new Set("Manuel"));
+
+console.log(ordersSet.size);
+
+console.log(ordersSet.has('Pizza')); //true
+console.log(ordersSet.has('NotInTheSet')); //false
+
+ordersSet.add("Bread");
+ordersSet.delete("Pizza");
+
+console.log(ordersSet);
+
+//ordersSet.clear();
+
+for(const order of ordersSet){
+  console.log(order);
+}
+
+const staff = ['Waiter', 'Chef', 'Waiter', 'Chef', 'Waiter', 'Cook'];
+//Transform Array into Set
+const staffSet = new Set(staff);
+console.log(staffSet);
+//Transform Set into Array
+const staffUnique = [...staffSet];
+console.log(staffUnique);
+//Or directly
+const staffUniqueDirectly = [...new Set(staff)];
+console.log(staffUniqueDirectly);
+
+//How many different letters are in a String
+console.log(new Set("Hallo Manuel").size)
+
+
+//// 117 Maps Fundamentals
+
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+console.log(rest.set(2, 'Lisabone, Portugal'));
+rest.set('categories', ['Italien', 'Pizzeria', 'Vegetarian'])
+.set('open', 11)
+.set('closed',23)
+.set(true, 'We are open')
+.set(false, 'We are closed');
+
+console.log(rest.get('name'));
+console.log(rest.get(1));
+console.log(rest.get(true));
+
+const time = 10;
+let message;
+(time > rest.get('open') && time < rest.get('closed') ? message = "We are open now" : message = "We are not open now");
+console.log(message);
+
+console.log(rest.has('name'));
+console.log(rest.delete(2));
+rest.clear();
+console.log(rest.size);
+
+
+//// 118 Maps: Iteration
+
+//Creating Map: Arrays in Array
+const question = new Map([
+  ['question', 'What is the best programming language?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct 🥳'],
+  [false, 'Try again']
+]);
+
+console.log(question)
+
+
